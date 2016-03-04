@@ -4,6 +4,7 @@ RUN yum update -y
 RUN yum install -y wget curl net-tools
 
 # installation apache latest
+RUN mkdir -p /usr/sbin
 RUN yum install httpd -y
 
 # installation supervisor
