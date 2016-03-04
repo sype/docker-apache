@@ -4,7 +4,7 @@ RUN yum update -y
 RUN yum install -y wget curl net-tools
 
 # installation apache latest
-yum install httpd -y
+RUN yum install httpd -y
 
 # installation supervisor
 RUN yum install -y python-setuptools
@@ -28,6 +28,5 @@ RUN chmod 777 /appli/supervisor
 COPY assets/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 80
-
 
 CMD /usr/bin/supervisord -c /etc/supervisord.conf -n
