@@ -1,7 +1,7 @@
 FROM bvuser/centos7:1.0
 
 RUN yum update -y
-RUN yum clean
+RUN yum clean all
 RUN yum install -y wget curl net-tools httpd
 
 
