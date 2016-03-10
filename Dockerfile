@@ -1,11 +1,9 @@
 FROM bvuser/centos7:1.0
 
 RUN yum update -y
-RUN yum install -y wget curl net-tools
+RUN yum clean
+RUN yum install -y wget curl net-tools httpd
 
-# installation apache latest
-RUN mkdir -p /usr/sbin
-RUN yum install httpd -y
 
 # installation supervisor
 RUN yum install -y python-setuptools
