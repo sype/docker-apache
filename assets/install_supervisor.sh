@@ -7,7 +7,7 @@ cat > /etc/supervisord.d/apache.ini <<EOF
 priority=20
 directory=/var/log/httpd
 command=/usr/sbin/apachectl start
-user=root
+user=apache
 autostart=true
 autorestart=false
 EOF

@@ -2,8 +2,14 @@ FROM bvuser/centos7:1.0
 
 RUN yum update -y
 RUN yum clean all
-RUN yum install -y wget curl net-tools httpd
+RUN yum install -y wget curl net-tools
+WORKING DIR /tmp
+RUN wget "ftp://rpmfind.net/linux/centos/7.2.1511/os/x86_64/Packages/httpd-2.4.6-40.el7.centos.x86_64.rpm"
+RUN rpm -ivh httpd-2.4.6-40.el7.centos.x86_64.rpm
 
+# creation user apache
+RUN useradd -d /home/apache -m apache && mkdir /home/apache/.ssh
+RUN chmod 600 /home/deployer/.ssh/authorized_keys
 
 # installation supervisor
 RUN yum install -y python-setuptools
