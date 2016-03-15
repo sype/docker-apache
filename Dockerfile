@@ -2,7 +2,7 @@ FROM bvuser/centos7:1.0
 
 RUN yum update -y
 RUN yum clean all
-RUN yum install -y wget curl net-tools
+RUN yum install -y wget curl net-tools openssh-client openssh-server
 
 # installation httpd + dependancies
 WORKDIR /tmp
@@ -18,6 +18,9 @@ RUN rpm -ivh httpd-2.4.6-40.el7.centos.x86_64.rpm
 RUN userdel apache
 RUN useradd -d /home/apache -m apache && mkdir /home/apache/.ssh
 RUN chmod 600 /home/apache/.ssh
+RUN chown -R apache:apache /home/apache 
+RUN chmod 755 /var/log/httpd
+RUN chmod 755 /usr/sbin/httpd
 
 # installation supervisor
 RUN yum install -y python-setuptools
