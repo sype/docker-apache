@@ -2,17 +2,8 @@ FROM bvuser/centos7:1.0
 
 RUN yum update -y
 RUN yum clean all
-RUN yum install -y wget curl net-tools openssh-client openssh-server
-
-# installation httpd + dependancies
-WORKDIR /tmp
-RUN wget "ftp://rpmfind.net/linux/centos/7.2.1511/os/x86_64/Packages/mailcap-2.1.41-2.el7.noarch.rpm"
-RUN rpm -ivh mailcap-2.1.41-2.el7.noarch.rpm
-RUN yum install -y httpd-tools.x86_64
-RUN wget "ftp://rpmfind.net/linux/centos/7.2.1511/os/x86_64/Packages/centos-logos-70.0.6-3.el7.centos.noarch.rpm"
-RUN rpm -ivh centos-logos-70.0.6-3.el7.centos.noarch.rpm
-RUN wget "ftp://rpmfind.net/linux/centos/7.2.1511/os/x86_64/Packages/httpd-2.4.6-40.el7.centos.x86_64.rpm"
-RUN rpm -ivh httpd-2.4.6-40.el7.centos.x86_64.rpm
+RUN yum install -y httpd wget curl net-tools openssh-client openssh-server
+RUN yum clean all
 
 # creation user apache
 RUN userdel apache
@@ -23,9 +14,26 @@ RUN chmod 755 /var/log/httpd
 RUN chmod 755 /usr/sbin/httpd
 
 # installation supervisor
-RUN yum install -y python-setuptools
+RUN yum install -y python-setuptools libapache2-mod-php5 php5-cli php5 php5-mcrypt php5-curl php5-pgsql php5-mysql
 RUN easy_install pip
 RUN pip install supervisor
+
+
+
+ADD ./assets/virtualhost /etc/apache2/sites-available/
+
+
+#Environement 
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+ENV APACHE_RUN_DIR /var/run/apache2
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_SERVERADMIN admin@localhost
+ENV APACHE_SERVERNAME localhost
+ENV APACHE_SERVERALIAS docker.localhost
+ENV APACHE_DOCUMENTROOT /var/www
 
 #creation user deployer 
 USER root
