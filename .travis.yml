@@ -1,0 +1,14 @@
+language: python
+python:
+  - 2.7
+
+services:
+  - docker
+
+install:
+  - docker build -t apache .
+  - docker run -d -p 127.0.0.1:80:80 --name apache
+
+script:
+  - docker ps | grep -q apache
+
