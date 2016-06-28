@@ -7,7 +7,7 @@ services:
 
 install:
   - docker build -t apache .
-  - docker run -d apche -p 80:80 --name apache
+  - docker run -d apache -p 80:80 --name apache
 
 
 script:
